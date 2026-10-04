@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+/* Same palette as the TV app (trivia-tv/src/theme), so that phone and screen look like one game. */
+@theme {
+  --font-sans: 'Fredoka', ui-rounded, system-ui, sans-serif;
+
+  --color-night: #0b1260;
+  --color-surface: #18217a;
+  --color-surface-raised: #232d93;
+  --color-muted: #aeb6f0;
+  --color-accent: #ffc93c;
+  --color-success: #2ecc71;
+  --color-danger: #ff5a5f;
+
+  /* Answer colors, in the order of the choices: A, B, C, D */
+  --color-answer-a: #e74c3c;
+  --color-answer-b: #3498db;
+  --color-answer-c: #f1c40f;
+  --color-answer-d: #2ecc71;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-night font-sans text-white antialiased;
+    background-image:
+      linear-gradient(to bottom, rgb(11 18 96 / 0.55), rgb(11 18 96 / 0.92)), url('/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* A buzzer, not a document: no zoom on double tap, no text selection when tapping fast */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
+
+  button {
+    @apply cursor-pointer select-none;
+  }
+
+  button:disabled {
+    @apply cursor-not-allowed;
+  }
+}
