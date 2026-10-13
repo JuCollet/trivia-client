@@ -5,6 +5,7 @@ import { isApiError, useSubmitThemes } from '@/api/games';
 import { Button, Card, PlayerChip, TextField } from '@/components/ui';
 import { errorMessage } from '@/i18n/errors';
 import { useMessages } from '@/i18n/language';
+import { useSessionStore } from '@/session/sessionStore';
 
 export function LobbyPhase({ view }: { view: PlayerView }) {
   const t = useMessages();
@@ -66,7 +67,9 @@ function ThemesForm({ view, onSubmitted }: { view: PlayerView; onSubmitted: () =
     setCount(me.themesToEnter);
     setThemes(Array.from({ length: me.themesToEnter }, (_, index) => themes[index] ?? me.themes[index] ?? ''));
   }
-  const submit = useSubmitThemes(game.code, me.id);
+  // me.id is the public id: the server finds the player by this phone's secret id, kept in the session
+  const playerId = useSessionStore((state) => state.playerId);
+  const submit = useSubmitThemes(game.code, playerId);
 
   const conflictIndex =
     isApiError(submit.error, 'THEME_CONFLICT') && submit.error.problem?.themeIndex != null

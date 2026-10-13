@@ -2,9 +2,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { api } from '@/api/client';
 import { useLanguageStore } from '@/i18n/language';
+import { useSessionStore } from '@/session/sessionStore';
 import { playerView } from '@/test/fixtures';
 
 import { LobbyPhase } from './LobbyPhase';
@@ -16,6 +18,26 @@ function wrapper({ children }: { children: ReactNode }) {
 describe('LobbyPhase', () => {
   beforeEach(() => {
     useLanguageStore.setState({ language: 'fr' });
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('sends the themes with the secret id of this phone, not the public id of the view', async () => {
+    useSessionStore.setState({ playerId: 'secret-id' });
+    const put = vi
+      .spyOn(api, 'PUT')
+      .mockResolvedValue({ data: undefined, response: new Response(null, { status: 204 }) } as never);
+    render(<LobbyPhase view={playerView({ me: { id: 'public-id', themes: [], themesToEnter: 1 } })} />, { wrapper });
+
+    await userEvent.type(screen.getByLabelText('Thème du tour 1'), 'Les volcans');
+    await userEvent.click(screen.getByRole('button', { name: 'Valider mes thèmes' }));
+
+    expect(put).toHaveBeenCalledWith(
+      '/games/{code}/players/{playerId}/themes',
+      expect.objectContaining({ params: { path: { code: 'KXWB', playerId: 'secret-id' } } }),
+    );
   });
 
   it('asks for the missing theme after the host added a round, keeping the others', () => {
