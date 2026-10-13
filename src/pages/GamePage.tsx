@@ -11,6 +11,7 @@ import { QuestionPhase } from '@/game/phases/QuestionPhase';
 import { ResultPhase } from '@/game/phases/ResultPhase';
 import { RoundEndPhase } from '@/game/phases/RoundEndPhase';
 import { ThemeRevealPhase } from '@/game/phases/ThemeRevealPhase';
+import { useFollowNextGame } from '@/game/useFollowNextGame';
 import { useGameConnection } from '@/game/useGameConnection';
 import { useWakeLock } from '@/hooks/useWakeLock';
 import { errorMessage } from '@/i18n/errors';
@@ -45,6 +46,7 @@ function ConnectedGame({ code, playerId }: { code: string; playerId: string }) {
   const t = useMessages();
   const { status, view } = useGameStore();
   const leaveGame = useLeaveGame();
+  const followingNextGame = useFollowNextGame(view);
 
   if (status === 'refused') {
     return (
@@ -53,6 +55,15 @@ function ConnectedGame({ code, playerId }: { code: string; playerId: string }) {
           <p className="text-lg">{t.connection.gameGone}</p>
           <Button onClick={leaveGame}>{t.common.back}</Button>
         </Card>
+      </Centered>
+    );
+  }
+
+  if (followingNextGame) {
+    return (
+      <Centered>
+        <Spinner />
+        <p className="text-center text-muted">{t.connection.followingNewGame}</p>
       </Centered>
     );
   }

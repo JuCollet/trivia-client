@@ -1,8 +1,8 @@
 import type { PlayerView, TvView } from '@jucollet/trivia-client/schema';
 
 const players: TvView['players'] = [
-  { id: 'p1', name: 'Alice', color: '#FF6B6B', score: 0, connected: true, themesReady: true },
-  { id: 'p2', name: 'Bob', color: '#54A0FF', score: 0, connected: true, themesReady: false },
+  { id: 'p1', name: 'Alice', color: '#FF6B6B', score: 0, connected: true, themeCount: 2, themesReady: true },
+  { id: 'p2', name: 'Bob', color: '#54A0FF', score: 0, connected: true, themeCount: 0, themesReady: false },
 ];
 
 export function playerView(overrides: { game?: Partial<TvView>; me?: Partial<PlayerView['me']> } = {}): PlayerView {
@@ -11,6 +11,7 @@ export function playerView(overrides: { game?: Partial<TvView>; me?: Partial<Pla
       code: 'KXWB',
       phase: 'LOBBY',
       canStart: false,
+      nextCode: null,
       players,
       settings: {
         language: 'fr',

@@ -45,6 +45,14 @@ const fr = {
     waitingForHost: 'Tout le monde est prêt ? L’hôte lance la partie depuis la TV.',
     waitingForThemes: 'En attente des thèmes des autres joueurs…',
     themesReady: 'prêt',
+    settings: (rounds: number, questions: number, seconds: number) =>
+      `${rounds} tour${rounds > 1 ? 's' : ''} • ${questions} question${questions > 1 ? 's' : ''} par thème • ${seconds} s pour répondre`,
+    roundsAdded: (rounds: number, missing: number) =>
+      `L’hôte est passé à ${rounds} tours : ajoute ${missing} thème${missing > 1 ? 's' : ''}.`,
+    roundsRemoved: (rounds: number, removed: number) =>
+      `L’hôte est passé à ${rounds} tour${rounds > 1 ? 's' : ''} : ${removed > 1 ? 'tes derniers thèmes ont été retirés' : 'ton dernier thème a été retiré'}.`,
+    completionIsFree: 'Compléter tes thèmes ne compte pas comme une modification.',
+    complete: 'Compléter mes thèmes',
   },
   themeReveal: {
     round: (number: number, total: number) => `Manche ${number}/${total}`,
@@ -100,6 +108,7 @@ const fr = {
     connecting: 'Connexion à la partie…',
     reconnecting: 'Connexion perdue, reconnexion…',
     gameGone: 'Cette partie n’existe plus.',
+    followingNewGame: 'L’hôte a lancé une nouvelle partie, on t’y emmène…',
   },
   errors: {
     generic: 'Oups, quelque chose s’est mal passé. Réessaie.',
@@ -195,6 +204,14 @@ const en: Messages = {
     waitingForHost: 'Everybody ready? The host starts the game from the TV.',
     waitingForThemes: 'Waiting for the other players’ themes…',
     themesReady: 'ready',
+    settings: (rounds, questions, seconds) =>
+      `${rounds} round${rounds > 1 ? 's' : ''} • ${questions} question${questions > 1 ? 's' : ''} per theme • ${seconds} s to answer`,
+    roundsAdded: (rounds, missing) =>
+      `The host switched to ${rounds} rounds: add ${missing} theme${missing > 1 ? 's' : ''}.`,
+    roundsRemoved: (rounds, removed) =>
+      `The host switched to ${rounds} round${rounds > 1 ? 's' : ''}: ${removed > 1 ? 'your last themes were removed' : 'your last theme was removed'}.`,
+    completionIsFree: 'Completing your themes does not count as a change.',
+    complete: 'Complete my themes',
   },
   themeReveal: {
     round: (number, total) => `Round ${number}/${total}`,
@@ -250,6 +267,7 @@ const en: Messages = {
     connecting: 'Connecting to the game…',
     reconnecting: 'Connection lost, reconnecting…',
     gameGone: 'This game no longer exists.',
+    followingNewGame: 'The host started a new game, taking you there…',
   },
   errors: {
     generic: 'Oops, something went wrong. Try again.',
