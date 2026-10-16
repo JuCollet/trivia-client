@@ -60,13 +60,14 @@ Manage Actions access_, sinon `npm ci` échoue en 403.
 
 ## Routes
 
-| Route               | Écran                                                     |
-| ------------------- | --------------------------------------------------------- |
-| `/`                 | Rejoindre : code, pseudo, couleur                         |
-| `/join/:code`       | Pareil, code prérempli : **cible du QR code de la TV**    |
-| `/game/:code`       | La partie, de la saisie des thèmes au podium              |
-| `/game/:code/rules` | Les règles par-dessus la partie, sans couper la connexion |
-| `/rules`            | Les règles depuis l'accueil                               |
+| Route               | Écran                                                                 |
+| ------------------- | --------------------------------------------------------------------- |
+| `/`                 | Rejoindre : code, pseudo, couleur                                     |
+| `/join/:code`       | Pareil, code prérempli : **cible du QR code de la TV**                |
+| `/game/:code`       | La partie, de la saisie des thèmes au podium                          |
+| `/game/:code/rules` | Les règles par-dessus la partie, sans couper la connexion             |
+| `/rules`            | Les règles depuis l'accueil                                           |
+| `/tv`               | L'écran TV dans un navigateur, relayé vers trivia-tv (`functions/tv`) |
 
 ## Architecture
 
