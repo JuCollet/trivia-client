@@ -41,6 +41,23 @@ Après un changement d'API côté serveur : `npm install @jucollet/trivia-client
 
 npm 11 plante sur certaines résolutions de peer dependencies (Vitest) : utiliser `npx npm@12 install …` si besoin.
 
+## Déploiement
+
+La CI (`.github/workflows/ci.yml`) vérifie chaque PR (types, lint, tests, build). À chaque push sur `master`, elle publie
+`dist/` sur Cloudflare Pages, projet `trivia-client`, servi sur `https://trivia.julco.dev`. Le projet Pages et le DNS
+sont créés par [trivia-infra](https://github.com/JuCollet/trivia-infra).
+
+À configurer dans _Settings → Secrets and variables → Actions_ :
+
+| Nom                     | Type     | Valeur                                                             |
+| ----------------------- | -------- | ------------------------------------------------------------------ |
+| `API_URL`               | variable | `https://trivia-api.julco.dev`, lu au build (`VITE_API_URL`)       |
+| `CLOUDFLARE_ACCOUNT_ID` | variable | identifiant du compte Cloudflare                                   |
+| `CLOUDFLARE_API_TOKEN`  | secret   | token Cloudflare avec la seule permission _Cloudflare Pages: Edit_ |
+
+Le paquet `@jucollet/trivia-client` doit aussi autoriser ce repo : _Packages → trivia-client → Package settings →
+Manage Actions access_, sinon `npm ci` échoue en 403.
+
 ## Routes
 
 | Route               | Écran                                                     |
