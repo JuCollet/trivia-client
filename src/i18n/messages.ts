@@ -87,7 +87,6 @@ const fr = {
     title: 'Fin de manche',
     yourAwards: 'Tes prix',
     noAward: 'Pas de prix pour toi cette fois.',
-    masterAverage: (points: number) => `Moyenne des autres : ${formatPoints(points)} pts`,
     score: 'Ton score',
   },
   podium: {
@@ -246,7 +245,6 @@ const en: Messages = {
     title: 'End of the round',
     yourAwards: 'Your awards',
     noAward: 'No award for you this time.',
-    masterAverage: (points) => `Average of the others: ${formatPoints(points, 'en')} pts`,
     score: 'Your score',
   },
   podium: {
