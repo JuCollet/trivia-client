@@ -58,8 +58,12 @@ jobs:
       group: deploy
       cancel-in-progress: false
     steps:
-      # functions/ (the /tv relay to trivia-tv) is deployed along with dist/
+      # functions/ (the /tv relay to trivia-tv) is deployed along with dist/. Only that folder is checked out:
+      # with package.json present, wrangler-action would install the whole project, private package included.
       - uses: actions/checkout@v7
+        with:
+          sparse-checkout: /functions/
+          sparse-checkout-cone-mode: false
 
       - uses: actions/download-artifact@v7
         with:
