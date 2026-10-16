@@ -12,13 +12,10 @@ export function RoundEndPhase({ view }: { view: PlayerView }) {
   }
 
   const myAwards = roundEnd.awards.filter((award) => award.playerId === view.me.id);
-  const isMaster = roundEnd.masterId === view.me.id;
 
   return (
     <div className="flex flex-1 flex-col justify-center gap-5 text-center">
       <h1 className="text-3xl font-bold">{t.roundEnd.title}</h1>
-
-      {isMaster && <p className="text-muted">{t.roundEnd.masterAverage(roundEnd.masterAverage)}</p>}
 
       <Card className="flex flex-col gap-3">
         <h2 className="text-lg font-semibold text-muted">{t.roundEnd.yourAwards}</h2>
