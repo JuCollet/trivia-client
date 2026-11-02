@@ -36,10 +36,6 @@ export function ResultPhase({ view }: { view: PlayerView }) {
         )}
       </div>
 
-      {mine && !mine.counted && (
-        <p className="rounded-xl bg-white/10 px-4 py-3 text-center text-sm text-muted">{t.result.notCounted}</p>
-      )}
-
       {mine?.counted && mine.correct && (
         <Card className="flex flex-col gap-1 text-sm">
           <Line label={t.result.basePoints} value={t.common.points(mine.basePoints)} />
