@@ -10,16 +10,25 @@ export function ThemeRevealPhase({ view }: { view: PlayerView }) {
     return null;
   }
 
-  const title = round.isFinal ? t.themeReveal.finalRound : t.themeReveal.round(round.number, round.total);
-  const subtitle = round.isFinal
-    ? t.themeReveal.finalHint
-    : view.me.master
-      ? t.themeReveal.yourTheme
-      : t.themeReveal.themeOf(round.masterName ?? '');
+  // The TV reveals the mystery theme with a slot machine: the server does not send it to the phones yet
+  if (round.isFinal) {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 text-center">
+        <p className="text-sm font-semibold tracking-widest text-muted uppercase">{t.themeReveal.finalRound}</p>
+        <p className="rounded-2xl bg-accent px-5 py-2 text-4xl font-bold text-night">×2</p>
+        <p className="text-xl">{t.themeReveal.finalHint}</p>
+        <p className="mt-4 text-2xl font-bold">📺 {t.themeReveal.lookAtTv}</p>
+      </div>
+    );
+  }
+
+  const subtitle = view.me.master ? t.themeReveal.yourTheme : t.themeReveal.themeOf(round.masterName ?? '');
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-6 text-center">
-      <p className="text-sm font-semibold tracking-widest text-muted uppercase">{title}</p>
+      <p className="text-sm font-semibold tracking-widest text-muted uppercase">
+        {t.themeReveal.round(round.number, round.total)}
+      </p>
       <p className="text-xl">{subtitle}</p>
       {round.ready && round.theme ? (
         <h1 className="text-4xl font-bold text-accent drop-shadow-lg">{round.theme}</h1>
@@ -30,7 +39,7 @@ export function ThemeRevealPhase({ view }: { view: PlayerView }) {
         </div>
       )}
       {round.themeReplaced && <p className="text-sm text-muted">{t.themeReveal.themeReplaced}</p>}
-      {view.me.master && !round.isFinal && (
+      {view.me.master && (
         <p className="rounded-2xl bg-white/10 px-4 py-3 text-sm text-muted">{t.themeReveal.masterRules}</p>
       )}
       <p className="mt-4 text-muted">📺 {t.themeReveal.lookAtTv}</p>
