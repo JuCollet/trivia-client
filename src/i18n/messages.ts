@@ -27,7 +27,7 @@ const fr = {
   },
   lobby: {
     themesTitle: 'Tes thèmes secrets',
-    themesTip: 'Choisis un thème que la moitié du groupe peut connaître, c’est ce qui rapporte le bonus bon thème.',
+    themesTip: 'Choisis un thème que les autres peuvent connaître aussi : c’est bien plus drôle pour tout le monde.',
     themeLabel: (index: number) => `Thème du tour ${index + 1}`,
     themePlaceholder: 'Ex. : Les fromages',
     submit: 'Valider mes thèmes',
@@ -58,7 +58,7 @@ const fr = {
     round: (number: number, total: number) => `Manche ${number}/${total}`,
     finalRound: 'Question finale mystère',
     yourTheme: 'C’est ton thème ! Tu es le maître de cette manche.',
-    masterRules: 'Tu réponds aussi, mais tu marques la moyenne des autres joueurs, plus le bonus bon thème.',
+    masterRules: 'Tu joues et tu marques tes points comme tout le monde. Mais à chaque question, le plus rapide à bien répondre avant toi te vole 200 points !',
     themeOf: (name: string) => `Le thème de ${name}`,
     themeReplaced: 'Thème remplacé par un thème proche.',
     preparing: 'Claude prépare les questions…',
@@ -71,7 +71,7 @@ const fr = {
     answered: 'Réponse envoyée',
     tooLate: 'Temps écoulé',
     reading: 'Lis bien la question, les réponses arrivent…',
-    masterNote: 'Ton thème : tes réponses ne comptent pas, mais réponds quand même !',
+    masterNote: 'Ton thème : réponds vite, sinon on te vole 200 points !',
     answeredCount: (count: number, total: number) => `${count}/${total} ont répondu`,
   },
   result: {
@@ -81,7 +81,6 @@ const fr = {
     goodAnswer: 'La bonne réponse',
     basePoints: 'Bonne réponse',
     speedBonus: 'Bonus de rapidité',
-    notCounted: 'C’est ton thème : tu marques la moyenne des autres en fin de manche.',
     responseTime: (millis: number) => `en ${(millis / 1000).toFixed(1)} s`,
   },
   roundEnd: {
@@ -97,7 +96,6 @@ const fr = {
     correctAnswers: (count: number) => `${count} bonne${count > 1 ? 's' : ''} réponse${count > 1 ? 's' : ''}`,
   },
   awards: {
-    bonTheme: 'Bonus bon thème',
     plusViteQueSonOmbre: 'Plus vite que son ombre',
     outsider: 'L’Outsider',
     seulContreTous: 'Seul contre tous',
@@ -132,19 +130,15 @@ const fr = {
     sections: [
       {
         title: 'Le score',
-        body: 'Une bonne réponse rapporte 500 points, plus un bonus de rapidité jusqu’à 500 points. Une mauvaise réponse fait perdre le bonus de rapidité que tu aurais gagné en répondant juste au même moment : répondre vite, c’est un pari !',
+        body: 'Une bonne réponse rapporte 500 points, plus un bonus de rapidité jusqu’à 500 points. Une mauvaise réponse ne fait perdre que la moitié du bonus de rapidité que tu aurais gagné en répondant juste au même moment : dans le doute, tente ta chance !',
       },
       {
         title: 'Le maître de la manche',
-        body: 'Le joueur dont le thème est révélé devient le maître. Il répond aussi, mais ses réponses ne comptent pas : il reçoit la moyenne des points des autres joueurs sur la manche.',
-      },
-      {
-        title: 'Bonus bon thème',
-        body: 'Si les autres trouvent entre 50 % et 80 % des réponses, le thème est bien choisi : le maître gagne 300 points par question. La TV l’affiche avec une jauge à zone verte.',
+        body: 'Le joueur dont le thème est révélé devient le maître. Il joue et marque ses points comme tout le monde, mais il peut se faire voler des points.',
       },
       {
         title: 'Plus vite que son ombre',
-        body: 'Le challenger qui bat le maître (bonne réponse plus rapide, ou bonne réponse quand le maître se trompe) sur au moins la moitié des questions lui vole 300 points.',
+        body: 'À chaque question, le challenger le plus rapide à bien répondre avant le maître (ou quand le maître se trompe) lui vole aussitôt 200 points.',
       },
       { title: 'L’Outsider', body: 'Un sans-faute sur la manche : +200 points.' },
       { title: 'Seul contre tous', body: 'Seul challenger à trouver une question : +150 points par question.' },
@@ -188,7 +182,7 @@ const en: Messages = {
   },
   lobby: {
     themesTitle: 'Your secret themes',
-    themesTip: 'Pick a theme half of the group may know: that is what earns the good theme bonus.',
+    themesTip: 'Pick a theme the others may know too: it’s way more fun for everyone.',
     themeLabel: (index) => `Round ${index + 1} theme`,
     themePlaceholder: 'E.g. Cheeses',
     submit: 'Send my themes',
@@ -217,7 +211,7 @@ const en: Messages = {
     round: (number, total) => `Round ${number}/${total}`,
     finalRound: 'Mystery final question',
     yourTheme: 'It’s your theme! You are the master of this round.',
-    masterRules: 'You answer too, but you score the average of the other players, plus the good theme bonus.',
+    masterRules: 'You play and score like everyone else. But on each question, the fastest correct answer ahead of you steals 200 of your points!',
     themeOf: (name) => `${name}’s theme`,
     themeReplaced: 'Theme replaced with a similar one.',
     preparing: 'Claude is writing the questions…',
@@ -230,7 +224,7 @@ const en: Messages = {
     answered: 'Answer sent',
     tooLate: 'Time’s up',
     reading: 'Read the question, the answers are coming…',
-    masterNote: 'Your theme: your answers don’t count, but answer anyway!',
+    masterNote: 'Your theme: answer fast, or someone steals 200 of your points!',
     answeredCount: (count, total) => `${count}/${total} answered`,
   },
   result: {
@@ -240,7 +234,6 @@ const en: Messages = {
     goodAnswer: 'The right answer',
     basePoints: 'Correct answer',
     speedBonus: 'Speed bonus',
-    notCounted: 'Your theme: you score the average of the others at the end of the round.',
     responseTime: (millis) => `in ${(millis / 1000).toFixed(1)} s`,
   },
   roundEnd: {
@@ -256,7 +249,6 @@ const en: Messages = {
     correctAnswers: (count) => `${count} correct answer${count > 1 ? 's' : ''}`,
   },
   awards: {
-    bonTheme: 'Good theme bonus',
     plusViteQueSonOmbre: 'Faster than his shadow',
     outsider: 'The Outsider',
     seulContreTous: 'One against all',
@@ -291,19 +283,15 @@ const en: Messages = {
     sections: [
       {
         title: 'Scoring',
-        body: 'A correct answer is worth 500 points, plus a speed bonus of up to 500 points. A wrong answer costs the speed bonus you would have earned by answering right at the same moment: answering fast is a bet!',
+        body: 'A correct answer is worth 500 points, plus a speed bonus of up to 500 points. A wrong answer only costs half the speed bonus you would have earned by answering right at the same moment: when in doubt, take a guess!',
       },
       {
         title: 'The round master',
-        body: 'The player whose theme is revealed becomes the master. They answer too, but their answers don’t count: they get the average points of the other players for the round.',
-      },
-      {
-        title: 'Good theme bonus',
-        body: 'If the others find between 50% and 80% of the answers, the theme was well chosen: the master earns 300 points per question. The TV shows it with a gauge and its green zone.',
+        body: 'The player whose theme is revealed becomes the master. They play and score like everyone else, but their points can be stolen.',
       },
       {
         title: 'Faster than his shadow',
-        body: 'The challenger who beats the master (faster correct answer, or correct answer when the master is wrong) on at least half of the questions steals 300 points from them.',
+        body: 'On each question, the fastest challenger to answer correctly ahead of the master (or when the master is wrong) steals 200 points from them right away.',
       },
       { title: 'The Outsider', body: 'A perfect round: +200 points.' },
       { title: 'One against all', body: 'The only challenger to find a question: +150 points per question.' },

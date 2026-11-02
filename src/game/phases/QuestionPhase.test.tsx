@@ -55,7 +55,7 @@ describe('QuestionPhase', () => {
     expect(screen.getByRole('button', { name: /Le Herve/ })).toBeDisabled();
   });
 
-  it('tells the master that their answers do not count', () => {
+  it('warns the master that their points can be stolen', () => {
     const view = playerView({
       game: {
         phase: 'QUESTION',
@@ -75,6 +75,6 @@ describe('QuestionPhase', () => {
     });
     render(<QuestionPhase view={view} />);
 
-    expect(screen.getByText(/tes réponses ne comptent pas/)).toBeInTheDocument();
+    expect(screen.getByText(/on te vole 200 points/)).toBeInTheDocument();
   });
 });
