@@ -47,7 +47,10 @@ export function playerView(overrides: { game?: Partial<TvView>; me?: Partial<Pla
 export function questionView(
   overrides: Partial<NonNullable<TvView['question']>> = {},
 ): NonNullable<TvView['question']> {
+  // Spread rather than written inline, so that this compiles with server contracts before and after the reading time
+  const readingOver = { answersOpen: true, opensAt: new Date().toISOString() };
   return {
+    ...readingOver,
     sequence: 7,
     number: 1,
     total: 3,

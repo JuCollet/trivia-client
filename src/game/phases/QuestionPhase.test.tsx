@@ -32,6 +32,19 @@ describe('QuestionPhase', () => {
     }
   });
 
+  it('locks the buttons while the question is being read', () => {
+    // During the reading time, the server sends the question without its choices
+    const view = playerView({ game: { phase: 'QUESTION', question: questionView({ choices: [] }) } });
+    render(<QuestionPhase view={view} />);
+
+    expect(screen.getByText(/Lis bien la question/)).toBeInTheDocument();
+    expect(screen.getAllByRole('button')).toHaveLength(4);
+    for (const button of screen.getAllByRole('button')) {
+      expect(button).toBeDisabled();
+    }
+    expect(screen.queryByText('Le Herve')).not.toBeInTheDocument();
+  });
+
   it('locks the buttons once the time is up', () => {
     const view = playerView({
       game: { phase: 'QUESTION', question: questionView({ endsAt: new Date(Date.now() - 1_000).toISOString() }) },
