@@ -1,90 +1,90 @@
 # trivia-client
 
-Client téléphone de **Chacun son truc** (EN : _To Each Their Thing_) : la page web qui sert de buzzer aux joueurs.
-L'écran est l'app TV (`../trivia-tv`), l'arbitre est le serveur (`../trivia-server`).
+Phone client of **Chacun son truc** (EN: _To Each Their Thing_): the web page players use as their buzzer.
+The screen is the TV app (`../trivia-tv`), the referee is the server (`../trivia-server`).
 
-## Démarrer
+## Getting started
 
 ```bash
-npm install          # NODE_AUTH_TOKEN doit être défini (voir plus bas)
-npm run dev          # http://localhost:5173, et http://<ip-du-mac>:5173 depuis les téléphones du réseau local
+npm install          # NODE_AUTH_TOKEN must be set (see below)
+npm run dev          # http://localhost:5173, and http://<mac-ip>:5173 from phones on the local network
 ```
 
-Le serveur de jeu doit tourner sur `http://localhost:8080` (`./mvnw spring-boot:run` dans `trivia-server`).
-En dev, Vite relaie `/games` et `/ws` vers lui : les téléphones ne parlent qu'à Vite, sans souci de CORS.
+The game server must run on `http://localhost:8080` (`./mvnw spring-boot:run` in `trivia-server`).
+In dev, Vite proxies `/games` and `/ws` to it: phones only talk to Vite, so there are no CORS issues.
 
-## Commandes
+## Commands
 
 ```bash
-npm run dev          # serveur de dev
+npm run dev          # dev server
 npm test             # Vitest (jsdom + Testing Library)
 npm run typecheck    # tsc
 npm run lint         # oxlint
 npm run format       # Prettier
-npm run build        # build de production dans dist/
+npm run build        # production build in dist/
 ```
 
 ## Configuration
 
-| Variable                  | Rôle                                                                         |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| `VITE_API_URL`            | URL du serveur en production (`https://…`). Vide : même origine que la page. |
-| `DEV_SERVER_PROXY_TARGET` | Dev uniquement : cible du proxy Vite (défaut `http://localhost:8080`).       |
+| Variable                  | Purpose                                                                 |
+| ------------------------- | ----------------------------------------------------------------------- |
+| `VITE_API_URL`            | Server URL in production (`https://…`). Empty: same origin as the page. |
+| `DEV_SERVER_PROXY_TARGET` | Dev only: target of the Vite proxy (default `http://localhost:8080`).   |
 
-## Client TypeScript du serveur
+## Server TypeScript client
 
-Les types, le client REST et les connexions WebSocket viennent de `@jucollet/trivia-client`, publié sur GitHub Packages
-depuis `trivia-server/clients/typescript`. Le `.npmrc` du projet lit le token dans `NODE_AUTH_TOKEN`
-(personal access token _classic_ avec le scope `read:packages`, exporté dans `~/.zshrc`, jamais dans le dépôt).
+Types, the REST client and the WebSocket connections come from `@jucollet/trivia-client`, published on GitHub Packages
+from `trivia-server/clients/typescript`. The project's `.npmrc` reads the token from `NODE_AUTH_TOKEN`
+(_classic_ personal access token with the `read:packages` scope, exported in `~/.zshrc`, never in the repository).
 
-Après un changement d'API côté serveur : `npm install @jucollet/trivia-client@latest`.
+After an API change on the server: `npm install @jucollet/trivia-client@latest`.
 
-npm 11 plante sur certaines résolutions de peer dependencies (Vitest) : utiliser `npx npm@12 install …` si besoin.
+npm 11 crashes on some peer dependency resolutions (Vitest): use `npx npm@12 install …` if needed.
 
-## Déploiement
+## Deployment
 
-La CI (`.github/workflows/ci.yml`) vérifie chaque PR (types, lint, tests, build). À chaque push sur `master`, elle publie
-`dist/` sur Cloudflare Pages, projet `trivia-client`, servi sur `https://trivia.julco.dev`. Le projet Pages et le DNS
-sont créés par [trivia-infra](https://github.com/JuCollet/trivia-infra).
+CI (`.github/workflows/ci.yml`) checks every PR (types, lint, tests, build). On every push to `master`, it publishes
+`dist/` to Cloudflare Pages, project `trivia-client`, served at `https://trivia.julco.dev`. The Pages project and the
+DNS records are created by [trivia-infra](https://github.com/JuCollet/trivia-infra).
 
-À configurer dans _Settings → Secrets and variables → Actions_ :
+To configure in _Settings → Secrets and variables → Actions_:
 
-| Nom                     | Type     | Valeur                                                             |
-| ----------------------- | -------- | ------------------------------------------------------------------ |
-| `API_URL`               | variable | `https://trivia-api.julco.dev`, lu au build (`VITE_API_URL`)       |
-| `CLOUDFLARE_ACCOUNT_ID` | variable | identifiant du compte Cloudflare                                   |
-| `CLOUDFLARE_API_TOKEN`  | secret   | token Cloudflare avec la seule permission _Cloudflare Pages: Edit_ |
+| Name                    | Type     | Value                                                               |
+| ----------------------- | -------- | ------------------------------------------------------------------- |
+| `API_URL`               | variable | `https://trivia-api.julco.dev`, read at build time (`VITE_API_URL`) |
+| `CLOUDFLARE_ACCOUNT_ID` | variable | Cloudflare account ID                                               |
+| `CLOUDFLARE_API_TOKEN`  | secret   | Cloudflare token with the _Cloudflare Pages: Edit_ permission only  |
 
-Le paquet `@jucollet/trivia-client` doit aussi autoriser ce repo : _Packages → trivia-client → Package settings →
-Manage Actions access_, sinon `npm ci` échoue en 403.
+The `@jucollet/trivia-client` package must also grant access to this repository: _Packages → trivia-client → Package
+settings → Manage Actions access_, otherwise `npm ci` fails with a 403.
 
 ## Routes
 
-| Route               | Écran                                                                 |
-| ------------------- | --------------------------------------------------------------------- |
-| `/`                 | Rejoindre : code, pseudo, couleur                                     |
-| `/join/:code`       | Pareil, code prérempli : **cible du QR code de la TV**                |
-| `/game/:code`       | La partie, de la saisie des thèmes au podium                          |
-| `/game/:code/rules` | Les règles par-dessus la partie, sans couper la connexion             |
-| `/rules`            | Les règles depuis l'accueil                                           |
-| `/tv`               | L'écran TV dans un navigateur, relayé vers trivia-tv (`functions/tv`) |
+| Route               | Screen                                                            |
+| ------------------- | ----------------------------------------------------------------- |
+| `/`                 | Join: code, nickname, color                                       |
+| `/join/:code`       | Same, with the code prefilled: **target of the TV QR code**       |
+| `/game/:code`       | The game, from theme entry to the podium                          |
+| `/game/:code/rules` | The rules on top of the game, without dropping the connection     |
+| `/rules`            | The rules from the home page                                      |
+| `/tv`               | The TV screen in a browser, proxied to trivia-tv (`functions/tv`) |
 
 ## Architecture
 
 ```
 src/
 ├── app/          router, QueryClient
-├── api/          client REST (openapi-fetch typé) + hooks React Query : résumé de partie, rejoindre, thèmes
-├── game/         store Zustand de la partie, connexion WebSocket (reconnexion), un composant par phase
-├── session/      identité du téléphone (playerId, pseudo, couleur, partie en cours), persistée en localStorage
-├── i18n/         textes FR/EN typés, sans dépendance
-├── components/   UI partagée (boutons de réponse, champs, cartes…)
-├── hooks/        chrono, wake lock
-└── pages/        une page par route
+├── api/          REST client (typed openapi-fetch) + React Query hooks: game summary, join, themes
+├── game/         Zustand game store, WebSocket connection (reconnection), one component per phase
+├── session/      phone identity (playerId, nickname, color, current game), persisted in localStorage
+├── i18n/         typed FR/EN texts, no dependency
+├── components/   shared UI (answer buttons, fields, cards…)
+├── hooks/        timer, wake lock
+└── pages/        one page per route
 ```
 
-- **Le serveur fait autorité.** Le téléphone affiche le dernier état reçu (`PlayerView`) et envoie ses réponses. Une seule route pour toute la partie : l'écran est une fonction de `game.phase`, le routeur ne duplique pas la machine à états.
-- **REST via React Query** pour la mise en place (rejoindre, thèmes). **WebSocket via Zustand** pour la partie : l'état poussé n'est pas du cache serveur qu'on refetch, c'est un flux.
-- **Reconnexion** : le `playerId` est généré une fois par téléphone et gardé en `localStorage`. Le serveur renvoie l'état complet à chaque connexion, donc se reconnecter suffit (retour de veille, Wi-Fi → 4G, rechargement).
-- **Langue** : celle du téléphone avant de rejoindre, puis celle de la partie.
-- Couleurs et lettres des réponses identiques à la TV (`trivia-tv/src/theme`).
+- **The server is authoritative.** The phone renders the last state received (`PlayerView`) and sends its answers. A single route covers the whole game: the screen is a function of `game.phase`, the router does not duplicate the state machine.
+- **REST via React Query** for setup (join, themes). **WebSocket via Zustand** for the game: pushed state is not server cache to refetch, it is a stream.
+- **Reconnection**: the `playerId` is generated once per phone and kept in `localStorage`. The server sends the full state on every connection, so reconnecting is enough (wake from sleep, Wi-Fi → 4G, reload).
+- **Language**: the phone's language before joining, then the game's language.
+- Answer colors and letters match the TV (`trivia-tv/src/theme`).
