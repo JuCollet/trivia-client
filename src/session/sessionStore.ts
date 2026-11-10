@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { playerColors } from './playerColors';
+import { randomAvatar } from './avatars';
 
 interface SessionState {
   /** Identity of this phone, kept forever: joining again with the same id is a reconnection. */
   playerId: string;
   name: string;
-  color: string;
+  avatar: string;
   /** Code of the game this phone joined, to come back to it after a reload or a closed tab. */
   gameCode: string | null;
-  setProfile: (profile: { name: string; color: string }) => void;
+  setProfile: (profile: { name: string; avatar: string }) => void;
   enterGame: (code: string) => void;
   leaveGame: () => void;
 }
@@ -20,13 +20,25 @@ export const useSessionStore = create<SessionState>()(
     (set) => ({
       playerId: randomUuid(),
       name: '',
-      color: playerColors[Math.floor(Math.random() * playerColors.length)],
+      avatar: randomAvatar(),
       gameCode: null,
-      setProfile: ({ name, color }) => set({ name, color }),
+      setProfile: ({ name, avatar }) => set({ name, avatar }),
       enterGame: (code) => set({ gameCode: code.toUpperCase() }),
       leaveGame: () => set({ gameCode: null }),
     }),
-    { name: 'trivia-session', version: 1 },
+    {
+      name: 'trivia-session',
+      version: 2,
+      // Version 1 had a color instead of an avatar
+      migrate: (persisted, version) => {
+        const state = persisted as Partial<SessionState> & { color?: string };
+        if (version < 2) {
+          delete state.color;
+          state.avatar = randomAvatar();
+        }
+        return state as SessionState;
+      },
+    },
   ),
 );
 

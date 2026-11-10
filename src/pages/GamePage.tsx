@@ -116,7 +116,7 @@ function TopBar({ view }: { view: PlayerView }) {
   const t = useMessages();
   return (
     <header className="mb-3 flex items-center justify-between gap-3">
-      <PlayerChip name={view.me.name} color={view.me.color} />
+      <PlayerChip name={view.me.name} avatar={view.me.avatar} />
       <div className="flex items-center gap-3">
         <span className="font-bold text-accent tabular-nums">{t.common.points(view.me.score)}</span>
         <Link

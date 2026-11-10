@@ -2,18 +2,19 @@ import { type FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 
 import { GAME_CODE_LENGTH, normalizeGameCode, useGameSummary, useJoinGame } from '@/api/games';
-import { ColorPicker } from '@/components/ColorPicker';
+import { AvatarPicker } from '@/components/AvatarPicker';
 import { LanguageSwitch } from '@/components/LanguageSwitch';
 import { Button, Card, Logo, TextField } from '@/components/ui';
 import { errorMessage } from '@/i18n/errors';
 import { toLanguage, useLanguageStore, useMessages } from '@/i18n/language';
+import { randomAvatar } from '@/session/avatars';
 import { useSessionStore } from '@/session/sessionStore';
 
 /** Same limit as the server (Player.MAX_NAME_LENGTH) */
 const NAME_MAX_LENGTH = 20;
 
 /**
- * Home page, and target of the TV's QR code (`/join/ABCD`): game code, nickname and color.
+ * Home page, and target of the TV's QR code (`/join/ABCD`): game code, nickname and avatar.
  */
 export function JoinPage() {
   const t = useMessages();
@@ -24,7 +25,7 @@ export function JoinPage() {
 
   const [code, setCode] = useState(() => normalizeGameCode(params.code ?? ''));
   const [name, setName] = useState(session.name);
-  const [color, setColor] = useState(session.color);
+  const [avatar, setAvatar] = useState(session.avatar);
 
   const summary = useGameSummary(code);
   const join = useJoinGame();
@@ -38,6 +39,12 @@ export function JoinPage() {
   }, [gameLanguage, setLanguage]);
 
   const isMyGame = session.gameCode === code;
+  // Back in my own game, my avatar is among the taken ones
+  const takenAvatars = isMyGame ? [] : (summary.data?.takenAvatars ?? []);
+  // Someone else got my avatar first: offer a free one
+  if (takenAvatars.includes(avatar)) {
+    setAvatar(randomAvatar(takenAvatars));
+  }
   const codeStatus = (() => {
     if (summary.isError) {
       return { error: errorMessage(t, summary.error) };
@@ -60,7 +67,7 @@ export function JoinPage() {
     if (!canSubmit) {
       return;
     }
-    const profile = { name: name.trim(), color };
+    const profile = { name: name.trim(), avatar };
     join.mutate(
       { code, id: session.playerId, ...profile },
       {
@@ -121,7 +128,7 @@ export function JoinPage() {
             autoComplete="nickname"
             enterKeyHint="go"
           />
-          <ColorPicker label={t.join.color} value={color} onChange={setColor} />
+          <AvatarPicker label={t.join.avatar} value={avatar} taken={takenAvatars} onChange={setAvatar} />
           {join.isError && (
             <p role="alert" className="rounded-xl bg-danger/15 px-4 py-3 text-danger">
               {errorMessage(t, join.error)}

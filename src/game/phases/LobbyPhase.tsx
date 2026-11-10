@@ -44,7 +44,7 @@ export function LobbyPhase({ view }: { view: PlayerView }) {
             <li key={player.id}>
               <PlayerChip
                 name={player.themesReady ? `${player.name} ✓` : player.name}
-                color={player.color}
+                avatar={player.avatar}
                 dimmed={!player.connected}
               />
             </li>
