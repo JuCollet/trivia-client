@@ -25,10 +25,11 @@ export const gameSummaryQuery = (code: string) =>
   });
 
 /**
- * Public summary of a game, to check a code and show its language before joining. Only fetched for a full code.
+ * Public summary of a game, to check a code and show its language before joining. Only fetched for a full code, and
+ * refreshed while the player picks an avatar, so that the ones other players take get greyed out.
  */
 export function useGameSummary(code: string) {
-  return useQuery({ ...gameSummaryQuery(code), enabled: code.length === GAME_CODE_LENGTH });
+  return useQuery({ ...gameSummaryQuery(code), enabled: code.length === GAME_CODE_LENGTH, refetchInterval: 5_000 });
 }
 
 export function useJoinGame() {

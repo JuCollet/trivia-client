@@ -4,6 +4,7 @@ import { Button, Card } from '@/components/ui';
 import { useMessages } from '@/i18n/language';
 import { cx } from '@/lib/cx';
 import { useLeaveGame } from '@/session/useLeaveGame';
+import { avatarUrl } from '@/session/avatars';
 
 const medals = ['🥇', '🥈', '🥉'];
 
@@ -38,7 +39,7 @@ export function PodiumPhase({ view }: { view: PlayerView }) {
               )}
             >
               <span className="w-8 text-center text-lg font-bold">{medals[entry.rank - 1] ?? entry.rank}</span>
-              <span className="size-3 rounded-full" style={{ backgroundColor: entry.color }} />
+              <img src={avatarUrl(entry.avatar)} alt="" className="size-8 rounded-full bg-night" />
               <span className="flex-1">
                 <span className="font-semibold">{entry.name}</span>
                 <span className="block text-xs text-muted">{t.podium.correctAnswers(entry.correctAnswers)}</span>

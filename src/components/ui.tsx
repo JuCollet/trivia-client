@@ -2,6 +2,7 @@ import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from 'react
 
 import { useLanguageStore } from '@/i18n/language';
 import { cx } from '@/lib/cx';
+import { avatarUrl } from '@/session/avatars';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'ghost' };
 
@@ -72,7 +73,7 @@ export function Logo({ className }: { className?: string }) {
   );
 }
 
-export function PlayerChip({ name, color, dimmed }: { name: string; color: string; dimmed?: boolean }) {
+export function PlayerChip({ name, avatar, dimmed }: { name: string; avatar: string; dimmed?: boolean }) {
   return (
     <span
       className={cx(
@@ -80,12 +81,7 @@ export function PlayerChip({ name, color, dimmed }: { name: string; color: strin
         dimmed && 'opacity-50',
       )}
     >
-      <span
-        className="flex size-6 items-center justify-center rounded-full text-xs font-bold text-night"
-        style={{ backgroundColor: color }}
-      >
-        {name.charAt(0).toUpperCase()}
-      </span>
+      <img src={avatarUrl(avatar)} alt="" className="size-6 rounded-full bg-night" />
       {name}
     </span>
   );
