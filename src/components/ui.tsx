@@ -12,8 +12,11 @@ export function Button({ variant = 'primary', className, type = 'button', ...pro
       type={type}
       className={cx(
         'rounded-2xl px-5 py-3.5 text-lg font-semibold transition active:scale-[0.97] disabled:opacity-50 disabled:active:scale-100',
-        variant === 'primary' && 'bg-accent text-night shadow-[0_4px_0_#c99a1f]',
-        variant === 'secondary' && 'bg-surface-raised text-white shadow-[0_4px_0_#141a66]',
+        // Slightly domed and matte, like the TV buttons
+        variant === 'primary' &&
+          'bg-linear-to-b from-[#ffd968] to-[#ffc12a] text-night shadow-[inset_0_1px_0_rgb(255_255_255/0.5),inset_0_-3px_0_rgb(0_0_0/0.12),0_4px_12px_rgb(0_0_0/0.25)]',
+        variant === 'secondary' &&
+          'bg-linear-to-b from-[#2d38a6] to-surface-raised text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.15),inset_0_-3px_0_rgb(0_0_0/0.15),0_4px_12px_rgb(0_0_0/0.25)]',
         variant === 'ghost' && 'text-muted underline-offset-4 hover:underline',
         className,
       )}
@@ -56,7 +59,7 @@ export function TextField({ label, hint, error, id, className, ...props }: TextF
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cx('rounded-3xl bg-surface/85 p-5 shadow-lg ring-1 ring-white/10 backdrop-blur', className)}>
+    <div className={cx('rounded-3xl bg-panel p-5 shadow-lg ring-1 ring-panel-border backdrop-blur', className)}>
       {children}
     </div>
   );

@@ -12,6 +12,11 @@
   --color-success: #2ecc71;
   --color-danger: #ff5a5f;
 
+  /* Background and panels, same as the TV lobby (trivia-tv/src/theme) */
+  --color-deep: #081670;
+  --color-panel: rgb(7 12 74 / 0.72);
+  --color-panel-border: rgb(90 140 255 / 0.35);
+
   /* Answer colors, in the order of the choices: A, B, C, D */
   --color-answer-a: #e74c3c;
   --color-answer-b: #3498db;
@@ -27,16 +32,24 @@
   }
 
   body {
-    @apply bg-night font-sans text-white antialiased;
-    background-image:
-      linear-gradient(to bottom, rgb(11 18 96 / 0.55), rgb(11 18 96 / 0.92)), url('/images/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    @apply bg-deep font-sans text-white antialiased;
     /* A buzzer, not a document: no zoom on double tap, no text selection when tapping fast */
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
+  }
+
+  /*
+   * A spotlight from the top, the light of the TV lobby background without its cards.
+   * On a fixed layer rather than with background-attachment: fixed, which iOS Safari ignores.
+   */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(120% 70% at 50% -5%, #1f55ff 0%, #1238d6 30%, #0a22a0 62%, var(--color-deep) 100%);
   }
 
   button {
