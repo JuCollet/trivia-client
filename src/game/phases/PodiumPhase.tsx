@@ -15,7 +15,7 @@ export function PodiumPhase({ view }: { view: PlayerView }) {
   const mine = podium.find((entry) => entry.playerId === view.me.id);
 
   return (
-    <div className="flex flex-1 flex-col gap-5 overflow-y-auto pb-2">
+    <div className="scroll-area flex flex-1 flex-col gap-5">
       <div className="flex flex-col items-center gap-1 pt-4 text-center">
         <p className="text-sm font-semibold tracking-widest text-muted uppercase">{t.podium.title}</p>
         {mine && (

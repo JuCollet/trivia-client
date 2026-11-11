@@ -17,7 +17,7 @@ export function ResultPhase({ view }: { view: PlayerView }) {
   const verdict = !answered ? t.result.noAnswer : mine.correct ? t.result.correct : t.result.wrong;
 
   return (
-    <div className="flex flex-1 flex-col gap-4 overflow-y-auto pb-2">
+    <div className="scroll-area flex flex-1 flex-col gap-4">
       <div className="flex flex-col items-center gap-1 py-2 text-center">
         <span className="text-5xl" aria-hidden>
           {!answered ? '😶' : mine.correct ? '🎉' : '😬'}

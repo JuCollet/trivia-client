@@ -60,3 +60,17 @@
     @apply cursor-not-allowed;
   }
 }
+
+/*
+ * A scrolling column inside the page gutter. overflow-y: auto also clips horizontally, which cut the rings and shadows
+ * of cards and answer buttons at the edges: the box grows into the gutter with a negative margin and pads it back, so
+ * content stays aligned while its outer decorations have room to show.
+ */
+@utility scroll-area {
+  overflow-y: auto;
+  margin-inline: -0.75rem;
+  padding-inline: 0.75rem;
+  margin-top: -0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
