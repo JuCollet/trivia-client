@@ -26,7 +26,7 @@ export function LobbyPhase({ view }: { view: PlayerView }) {
   }
 
   return (
-    <div className="flex flex-col gap-4 overflow-y-auto pb-2">
+    <div className="scroll-area flex flex-col gap-4">
       {roundsRemoved && (
         <p role="status" className="rounded-xl bg-accent/15 px-4 py-3 text-sm text-accent">
           {roundsRemoved}
