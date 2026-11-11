@@ -3,6 +3,7 @@ import { type ReactNode, useEffect, useState } from 'react';
 import { Link, Navigate, Outlet, useParams } from 'react-router';
 
 import { normalizeGameCode } from '@/api/games';
+import { LeaveGameButton } from '@/components/LeaveGameButton';
 import { Button, Card, PlayerChip, Spinner } from '@/components/ui';
 import { useGameStore } from '@/game/gameStore';
 import { LobbyPhase } from '@/game/phases/LobbyPhase';
@@ -126,6 +127,7 @@ function TopBar({ view }: { view: PlayerView }) {
         >
           ?
         </Link>
+        <LeaveGameButton />
       </div>
     </header>
   );

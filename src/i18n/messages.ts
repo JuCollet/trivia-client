@@ -9,6 +9,13 @@ const fr = {
     points: (points: number) => `${formatPoints(points)} pts`,
     loading: 'Chargement…',
   },
+  leave: {
+    button: 'Quitter la partie',
+    title: 'Quitter la partie ?',
+    body: 'Tu retournes à l’accueil et tu ne verras plus la partie sur ton téléphone.',
+    confirm: 'Quitter',
+    stay: 'Rester',
+  },
   join: {
     title: 'Rejoindre la partie',
     code: 'Code de la partie',
@@ -169,6 +176,13 @@ const en: Messages = {
     back: 'Back',
     points: (points) => `${formatPoints(points, 'en')} pts`,
     loading: 'Loading…',
+  },
+  leave: {
+    button: 'Leave game',
+    title: 'Leave the game?',
+    body: 'You go back to the home screen and stop seeing the game on your phone.',
+    confirm: 'Leave',
+    stay: 'Stay',
   },
   join: {
     title: 'Join the game',
